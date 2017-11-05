@@ -85,19 +85,19 @@ function showArticle(newRequest) {
 
     newRequest.onload = function() {
     var data = JSON.parse(newRequest.response);
-    console.log(data.articles);
+    console.log(data.source, data);
         if (newRequest.status >= 200 && newRequest.status <= 400) {
             wrapper.style.display = "none";
             wrapper2.style.display = "flex";
 
             for (var y = 0; y < 1; y++) {
                 wrapper2.innerHTML += 
-                "<h3>" + data.articles[y].author + "</h3>";
+                "<h3>" + data.source + "</h3>";
             }
 
             for (var x = 0; x < data.articles.length; x++) {
                 (function (x) {
-                    wrapper2.innerHTML += 
+                    wrapper2.innerHTML +=
                         "<div class='article-box'>" +
                             "<i class='fa fa-heart-o' aria-hidden='true'></i>" +
                             "<img src='" + data.articles[x].urlToImage + "'>" + 
