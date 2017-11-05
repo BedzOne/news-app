@@ -1,0 +1,49 @@
+header {
+    position: relative;
+    background: $headerSand;
+    padding: 0.5em 0.5em 0 0.5em;
+}
+
+h1{
+    margin: 0;
+    width: 70%;
+    text-align: center;
+    
+}
+
+
+
+#header__search-input {
+    position: absolute;
+    top: 0.9em;
+    left: 15%;
+    width: 60%;
+    height: 2em;
+    display: none;
+}
+
+
+
+
+
+
+// #header__view-control {
+//     width: 100%;
+
+//     .header__view-control--item:nth-child(1), .header__view-control--item:nth-child(2) {
+//         width: 50%;
+//         margin: 0;
+//     }
+
+//     .header__view-control--item:nth-child(3) {
+//         width: 100%;    
+//     }
+
+//     .header__view-control--item:nth-child(1), .header__view-control--item:nth-child(2),
+//     .header__view-control--item:nth-child(3) {
+//         text-align: center;
+//     }
+// }
+
+
+
