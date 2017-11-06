@@ -2,9 +2,11 @@
 @import "Base/variables";
 @import "Base/_base";
 
-@import "Modules/_buttons";
-@import "Modules/_typography";
 @import "Layout/_header";
 @import "Layout/_nav";
 @import "Layout/_content";
 @import "Layout/_footer";
+
+@import "Modules/_buttons";
+@import "Modules/_typography";
+@import "Modules/_js-classes";

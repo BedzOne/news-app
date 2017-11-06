@@ -1,0 +1,34 @@
+.showInput {
+    display: block;
+}
+
+#wrapper {
+
+    .news--view-change {
+        display: flex;
+        flex-direction: row;
+        width: 30em;
+        max-width: 100%;
+        margin-right: 0;
+        height: 5em;
+    
+    }
+
+    .newsImgWrapper--view-change {
+        height: 5em;
+        width: 30%;
+    }
+
+    .newsImg--view-change {
+        width:  100%;
+        height: 100%;
+    }
+
+    .newsInner--view-change {
+        width: 70%;
+        height: 100%;
+        
+    }
+}
+
+

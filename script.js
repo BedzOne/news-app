@@ -5,7 +5,7 @@ var article = document.querySelector("#article");
 var wrapper = document.querySelector("#wrapper"),
     wrapper2 = document.querySelector("#wrapper-2");
 var btn = document.querySelector("#header__back-button");
-var a = document.getElementsByClassName("news");
+var newsItem = document.getElementsByClassName("news");
 
 // EVENT LISTENERS
 
@@ -58,16 +58,16 @@ function appendSources(xhr) {
             wrapper.innerHTML += 
             "<div class='news'>" + 
                 "<div class='news__img'>" +
-                    "<img src='img/1.png'>" + 
+                    "<img src='img/1.png' alt='' class='inner-img'>" + 
                 "</div>" +
                 "<div class='news__inner'>" +
                     data.sources[i].name + 
                 "</div>"
             "</div>";
 
-            for (var j = 0; j < a.length - 1; j++) {
+            for (var j = 0; j < newsItem.length - 1; j++) {
                 (function (j) {
-                    a[j].onclick = function() {
+                    newsItem[j].onclick = function() {
                         getRequest(data, j);
                     }
                 })(j);
@@ -123,4 +123,41 @@ function showArticle(newRequest) {
 
 }
 
-// function show
+// function to display search input
+
+var searchBtn = document.querySelector("#search-btn");
+var searchInput = document.querySelector(".header__search-input");
+
+var headerTitle = document.querySelector("#header__title");
+
+function displayInput() {
+    searchInput.classList.toggle("showInput");
+}
+
+searchBtn.addEventListener("click", displayInput);
+
+
+// function to change view of news sources
+
+var viewBtn = document.querySelector("#header__view-button"),
+    imgWrapper = document.getElementsByClassName('news__img'),
+    newsInner = document.getElementsByClassName('news__inner'),
+    newsImg = document.getElementsByClassName('inner-img');
+
+
+function changeView() {
+
+    for (var j = 0; j < newsItem.length; j++) {
+        (function (j) {
+                newsItem[j].classList.toggle("news--view-change");
+                imgWrapper[j].classList.toggle("newsImgWrapper--view-change");
+                newsInner[j].classList.toggle("newsInner--view-change");
+                newsImg[j].classList.toggle("newsImg--view-change");
+        })(j);
+       
+    }
+    
+    
+}
+
+viewBtn.addEventListener("click", changeView);
