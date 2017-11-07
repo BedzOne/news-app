@@ -1,10 +1,38 @@
+button {
+    background: transparent;
+    border: 0.02em solid transparent;
+    font-size: 1em;
+    outline: none;
+}
+
 #header__back-button {
-    margin-top: 1em;
+    margin-left: 0.1em;
     margin-bottom: 0.5em;
     bottom: 0.15em;
     left: 0.1em;
+    opacity: 0;
+    font-size: 1.3em;
+}
+
+#header__menu-button {
+    margin-left: 0.2em;
+}
+
+#header__view-button {
+    position: relative;
+    // background: blue;
 }
 
 #search-btn {
-    margin-right: 0.5em;
+    // margin-right: 0.5em;
+}
+
+.view-btn2, .view-btn1{
+    position: absolute;
+    top: 0.2em;
+    left: 0.2em;
+}
+
+.view-btn2 {
+    opacity: 0;
 }
