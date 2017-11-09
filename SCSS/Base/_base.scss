@@ -16,9 +16,10 @@ footer,
 #wrapper-2,
 .news,
 .article-box,
+.article__inner,
 .news__img,
 .news__inner,
-a, button {
+button {
     @include flexbox();
 }
 
@@ -26,7 +27,9 @@ a, button {
 main,
 .news,
 #wrapper-2,
-.article-box {
+.article-box,
+.article__inner,
+{
     @include flex-direction(column);
 }
 
@@ -36,7 +39,7 @@ header,
     @include flex-wrap(wrap);
 }
 
-
+header,
 footer,
 #wrapper-2,
 .news,
@@ -49,5 +52,11 @@ a, button {
 
 #wrapper, #wrapper-2 {
     @include justify-content(center);
-    margin: 1.2em 0;
+    
+}
+
+footer {
+    a {
+        @include flexbox();
+    }
 }

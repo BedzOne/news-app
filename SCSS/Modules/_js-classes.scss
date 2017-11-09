@@ -1,6 +1,6 @@
 .showInput {
     display: block;
-    width: 60%;
+    width: 80%;
     border-bottom: 0.01em solid rgb(36, 31, 17);
 }
 
@@ -27,9 +27,10 @@
     }
 
     .newsInner--view-change {
+        margin-top: 0;        
         width: 70%;
         height: 100%;
-        
+        font-size: 1.2em;
     }
 
     
@@ -46,3 +47,23 @@
 .show-view-btn2 {
     opacity: 1;
 }
+
+.hideBackBtn {
+    color: $white;
+    border-right: none;
+    display:none;
+}
+
+.footer-view-wrapper {
+    display: none;
+}
+
+footer {
+
+    .extend-cred-div {
+        width: calc((100% / 6) * 3);
+    }
+
+}
+
+

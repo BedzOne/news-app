@@ -1,4 +1,5 @@
 main {
+    margin: 2em 0;
     padding: 1em 0em 1em 0em;
     // background: #FAF3DD;
     position: relative;
@@ -16,13 +17,11 @@ main {
         margin-bottom: 0.7em;
         cursor: pointer;
         @include box-shadow(0px, 0px, 5px, 1px, $darkGrey);
-        transition: all 0.3s;
+        transition: all 0.05s;
 
         &:nth-child(3n+0) {
             margin-right: 0em;
         } 
-
-        
     }    
 
     img {
@@ -55,8 +54,7 @@ main {
     }
 
     .article-box {
-        display: flex;
-        flex-direction: row;
+        @include flex-direction(row);
         position: relative;
         height: auto;
         width:100%;
@@ -69,7 +67,7 @@ main {
         img {
             width:35%;
             height: auto;
-            max-height: 5.1em;
+            max-height: 4.7em;
             min-height: 4em;
         }
 
@@ -81,7 +79,8 @@ main {
 
         h4 {
             font-size: 57%;
-            margin-bottom: 0.3em;
+            margin: 0;
+            margin-top: 0.3em;
         }
         
         p {
@@ -113,9 +112,8 @@ main {
     }
     
     .article-box:nth-child(2) {
-        display: block;
+        @include flex-direction(column);
         height: auto;
-        // max-height: 20em;
         margin-top: 1em;
         margin-bottom: 1em;
 
@@ -135,7 +133,7 @@ main {
         img {
             width: 100%;
             height: 50%;
-            max-height: 8em;
+            max-height: 10em;
             margin-bottom: 1em;
         }
 
