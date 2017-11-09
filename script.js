@@ -1,21 +1,20 @@
 // variables
 
-var author = document.querySelector("#author");
-var article = document.querySelector("#article");
-var wrapper = document.querySelector("#wrapper"),
-    wrapper2 = document.querySelector("#wrapper-2");
-var backBtn = document.querySelector("#header__back-button");
-var newsItem = document.getElementsByClassName("news");
+var author = document.querySelector("#author"),
+    article = document.querySelector("#article"),
+    wrapper = document.querySelector("#wrapper"),
+    wrapper2 = document.querySelector("#wrapper-2"),
+    backBtn = document.querySelector("#header__back-button"),
+    newsItem = document.getElementsByClassName("news");
 
 // EVENT LISTENERS
 
 window.addEventListener("load", displayNewsSources);
-// window.addEventListener("load", getRequest);
-backBtn.addEventListener("click", displayNewsSources);
-backBtn.onclick = function() {
-    displayNewsSources();
-    backBtn.style.opacity = '0';
-}
+
+// backBtn.onclick = function() {
+//     displayNewsSources();
+//     // backBtn.style.opacity = '0';
+// }
 
 //function to display news sources on home page
 
@@ -105,7 +104,7 @@ function showArticle(newRequest) {
                 (function (x) {
                     wrapper2.innerHTML +=
                         "<div class='article-box'>" +
-                            "<i class='fa fa-heart-o' aria-hidden='true'></i>" +
+                            // "<i class='fa fa-heart-o' aria-hidden='true'></i>" +
                             "<img src='" + data.articles[x].urlToImage + "'>" + 
                             "<div class='article__inner'>" +
                                 "<a  href='" + data.articles[x].url +"' target='blank'>" + 
@@ -122,9 +121,10 @@ function showArticle(newRequest) {
                 })(x);
             
             }
-            
-            wrapper.innerHTML = "";
             backBtn.style.opacity = '1';
+            wrapper.innerHTML = "";
+            viewBtn.style.display = "none";
+            
         }
     }
 
@@ -173,4 +173,4 @@ function changeView() {
     // viewIcon2.style.opacity = '1';
 }
 
-viewBtn.addEventListener("click", changeView);
+// viewBtn.addEventListener("click", changeView);

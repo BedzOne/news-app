@@ -14,12 +14,12 @@ footer,
 #header__view-control,
 #wrapper, 
 #wrapper-2,
-// #header__nav-burger-wrapper,
 .news,
 .article-box,
 .news__img,
-.news__inner {
-    display: flex;
+.news__inner,
+a, button {
+    @include flexbox();
 }
 
 
@@ -27,28 +27,27 @@ main,
 .news,
 #wrapper-2,
 .article-box {
-    flex-direction: column;
+    @include flex-direction(column);
 }
 
 header,
 #header__view-control,
 #wrapper {
-    flex-wrap: wrap;
+    @include flex-wrap(wrap);
 }
 
-// #header__nav-burger-wrapper,
+
 footer,
 #wrapper-2,
 .news,
-.news__inner {
-    align-items: center;
-    justify-content: center;
+.news__inner,
+footer,
+a, button {
+    @include align-items(center);
+    @include justify-content(center);
 }
 
-#wrapper {
-    justify-content: center;
+#wrapper, #wrapper-2 {
+    @include justify-content(center);
+    margin: 1.2em 0;
 }
-
-
-
-

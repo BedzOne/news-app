@@ -8,42 +8,16 @@
     <meta name="desription" content="News Application - based on News API - https://newsapi.org">
     <title>Document</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="https://use.fontawesome.com/fe8b3ea96a.js"></script>
 </head>
 <body>
 
     <!-- HEADER -->
 
     <header>
-        <button id="header__menu-button">
-            <i class="fa fa-bars" aria-hidden="true"></i>
-        </button>
-        
-        <nav class="header__nav">
-            <h5 class="header__title">News Market</h5>
-            <input type="text" id="header__nav--search-input">
-            <ul class="header__nav__ul">
-                <li>Home</li>
-                <li>Favourite Articles</li>
-                <li>Favourtie News</li>
-                <li>
-                    <i>G</i>
-                    <i>L</i>
-                </li>
-            </ul>
-        </nav>
         <h1 class="header__title">News Market</h1>
         <input type="text" class="header__search-input" placeholder='Search for a news source'>
         <button id="search-btn"><i class="fa fa-search" aria-hidden="true"></i></button>
-        <button id="header__view-button">
-            <i class="fa fa-th view-btn1" aria-hidden="true"></i>
-            <i class="fa fa-th-list view-btn2" aria-hidden="true"></i>
-        </button>
         
-        <div id='header__bottom-div'>
-            <button id="header__back-button">
-                <i class="fa fa-angle-double-left" aria-hidden="true"></i>
-            </button></div>
     </header>
 
     <!-- CONTENT -->
@@ -56,13 +30,27 @@
     <!-- FOOTER -->
 
     <footer>
-        <a href="https://github.com/BedzOne">
+        <button id="footer__bookmark-button">
+            <i class="fa fa-heart-o" aria-hidden="true"></i>
+        </button>
+        
+        <button id="footer__view-button">
+            <i class="fa fa-th view-btn view-btn1" aria-hidden="true"></i>
+            <i class="fa fa-th-list view-btn view-btn2" aria-hidden="true"></i>
+        </button>
+
+        <button id="footer__back-button">
+                <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+        </button>
+        <div id='footer__cred-div'></div>
+        <a class='github-link' href="https://github.com/BedzOne">
             <i class="fa fa-github" aria-hidden="true"></i>
         </a>
     </footer>
 
     <!-- SCRIPTS -->
-
+    <script src="https://use.fontawesome.com/fe8b3ea96a.js"></script>
+    
     <script src="script.js"></script>
 </body>
 </html>
