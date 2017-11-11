@@ -14,20 +14,24 @@ footer,
 #header__view-control,
 #wrapper, 
 #wrapper-2,
-.news,
-.article-box,
+#wrapper-3,
+.news__container,
+.news__content,
+.article__container,
 .article__inner,
 .news__img,
 .news__inner,
-button {
+button,
+.icons {
     @include flexbox();
 }
 
 
 main,
-.news,
+.news__container,
+.news__content,
 #wrapper-2,
-.article-box,
+.article__container,
 .article__inner,
 {
     @include flex-direction(column);
@@ -35,22 +39,24 @@ main,
 
 header,
 #header__view-control,
-#wrapper {
+#wrapper,
+#wrapper-3 {
     @include flex-wrap(wrap);
 }
 
 header,
 footer,
 #wrapper-2,
-.news,
+.news__container,
 .news__inner,
+.news__content,
 footer,
 a, button {
     @include align-items(center);
     @include justify-content(center);
 }
 
-#wrapper, #wrapper-2 {
+#wrapper, #wrapper-2, #wrapper-3 {
     @include justify-content(center);
     
 }

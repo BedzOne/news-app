@@ -11,21 +11,33 @@ button {
     height: 100%;
 }
 
+.news__bookmark-button, .news__bookmarkRemove-button {
+    position: absolute;
+    top: 0.1em;
+    right: 0em;
+    font-size: 1.5em;
+    color: $black;
+
+}
+
+// .news__container
+
 footer {
 
     button {
         border-right: 0.05em solid $grey;
     }
+
+    .footer__view-button {
+        position: relative;
+    }
+    
+    .view-btn2, .view-btn1{
+        position: absolute;
+    }
+    
+    .view-btn2 {
+        opacity: 0;
+    }
 }
 
-.footer__view-button {
-    position: relative;
-}
-
-.view-btn2, .view-btn1{
-    position: absolute;
-}
-
-.view-btn2 {
-    opacity: 0;
-}

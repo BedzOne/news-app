@@ -1,19 +1,23 @@
 // variables
 
-var author = document.querySelector("#author"),
-    article = document.querySelector("#article"),
-    wrapper = document.querySelector("#wrapper"),
+var wrapper = document.querySelector("#wrapper"),
     wrapper2 = document.querySelector("#wrapper-2"),
+    wrapper3 = document.querySelector("#wrapper-3"),
     backBtn = document.querySelector(".footer__back-button"),
-    newsItem = document.getElementsByClassName("news"),
-    credDiv = document.querySelector('.footer__cred-div');
+    newsContainer = document.getElementsByClassName("news__content"),
+    credDiv = document.querySelector('.footer__cred-div'),
+    bookmarkBtn = document.getElementsByClassName('news__bookmark-button'),
+    twittBtn = document.getElementsByClassName('twitt-btn');
 
-// EVENT LISTENERS
-
+// EVENT LISTENERS to load news sources
 window.addEventListener("load", displayNewsSources);
 
 backBtn.onclick = function() {
     displayNewsSources();
+    footerBookmarkBtn.classList.remove('hideFooterBtn');
+    
+    viewBtn.classList.remove('footer-view-wrapper');
+    credDiv.classList.add('extend-cred-div');
 }
 
 //function to display news sources on home page
@@ -38,7 +42,6 @@ function getRequest(b, i) {
         var request = new XMLHttpRequest();
         var method = "GET";  
         var URL = "https://newsapi.org/v1/articles?source="+ b.sources[i].id +"&sortBy=top&apiKey=f06cf653fb394fc9b33e490f5ff5a9bc";
-        // var URL = "https://newsapi.org/v1/articles?source=bbc-news&sortBy=top&apiKey=f06cf653fb394fc9b33e490f5ff5a9bc";
         // request.responseType = "json";
         request.open(method, URL);
         showArticle(request);
@@ -53,47 +56,68 @@ function getRequest(b, i) {
 function appendSources(xhr) {
 
     xhr.onload = function() {
+
         var data = JSON.parse(xhr.response);
         wrapper.style.display = "flex";
         wrapper2.style.display = "none";
-        console.log(data.sources);
+        wrapper3.style.display = "none";
+        // console.log(data.sources);
         for (var i = 0; i < data.sources.length - 1; i++) {
             wrapper.innerHTML += 
-            "<div class='news'>" + 
-                "<div class='news__img'>" +
-                    "<img src='img/"+i+ ".png' alt='' class='inner-img'>" + 
-                "</div>" +
-                "<div class='news__inner'>" +
-                    "<span>" + data.sources[i].name + "</span>" +
+            
+            "<div class='news__container'>" + 
+                "<button class='news__bookmark-button'>" +
+                    "<i class='fa fa-bookmark-o' aria-hidden='true'></i>" +
+                "</button>" +
+                "<div class='news__content'>" +
+                    "<div class='news__img'>" +
+                        "<img src='img/"+i+ ".png' alt='' class='inner-img'>" + 
+                    "</div>" +
+                    "<div class='news__inner'>" +
+                        "<span>" + data.sources[i].name + "</span>" +
+                    "</div>" +
                 "</div>" +
             "</div>";
 
-            for (var j = 0; j < newsItem.length - 1; j++) {
-                (function (j) {
-                    newsItem[j].onclick = function() {
-                        getRequest(data, j);
-                        
-                    }
-                })(j);
-               
-            }
-        }    
-        
-        wrapper2.innerHTML = "";
-        backBtn.classList.add('hideBackBtn');
-        viewBtn.classList.remove('footer-view-wrapper');
-        credDiv.classList.add('extend-cred-div');
-    }    
-}
+        }  // first for loop  
+        for (var x = 0; x < bookmarkBtn.length; x++) {
+            
+            (function (x) {
+                bookmarkBtn[x].onclick = function() {
+                    bookmarkNewsSource(this, x, data);
+                }
+            })(x);
+        }
 
+        // return false;
+         for (var j = 0; j < newsContainer.length - 1; j++) {
+            (function (j) {
+                newsContent[j].onclick = function() {
+                    getRequest(data, j);
+                    
+                }
+            })(j);
+        } // second for loop
+        
+        bookmarkBtn[31].style.color = 'white';
+        bookmarkBtn[35].style.color = 'white';
+        bookmarkBtn[53].style.color = 'white';
+        bookmarkBtn[55].style.color = 'white';
+        bookmarkBtn[57].style.color = 'white';
+        wrapper2.innerHTML = "";
+        wrapper3.innerHTML = "";
+        backBtn.classList.add('hideFooterBtn');
+
+    } // onload function
+}
 
 //show articles in html
 
 function showArticle(newRequest) {
 
     newRequest.onload = function() {
+
     var data = JSON.parse(newRequest.response);
-    console.log(data.source, data);
         if (newRequest.status >= 200 && newRequest.status <= 400) {
             wrapper.style.display = "none";
             wrapper2.style.display = "flex";
@@ -101,36 +125,209 @@ function showArticle(newRequest) {
             for (var y = 0; y < 1; y++) {
                 wrapper2.innerHTML += 
                 "<h3>" + data.source + "</h3>";
+                // "<div>" +
+                // "<img src='img/"+y+ ".png' alt='' class='inner-img'>" ;
             }
-
+            console.log(data.articles);
             for (var x = 0; x < data.articles.length; x++) {
                 (function (x) {
                     wrapper2.innerHTML +=
-                        "<div class='article-box'>" +
-                            // "<i class='fa fa-heart-o' aria-hidden='true'></i>" +
+                        "<div class='article__container'>" +
                             "<img src='" + data.articles[x].urlToImage + "'>" + 
                             "<div class='article__inner'>" +
                                 "<a  href='" + data.articles[x].url +"' target='blank'>" + 
                                     "<h4>" + data.articles[x].title + "</h4>" +
-                                    // "<span>" + data.articles[x].publishedAt + "</span>" +
                                     "<p>" + data.articles[x].description + "</p>" +
                                 "</a>" + 
                                 "<div class='icons'>" +
-                                    "<i class='fa fa-twitter' aria-hidden='true'></i>" + 
-                                    "<i class='fa fa-facebook' aria-hidden='true'></i>" +
+                                    "<i class='fa fa-twitter twitt-btn ' aria-hidden='true'></i>" + 
+                                "<div class='fb-share-button' data-href='"+ data.articles[x].url +"' data-layout='button_count' data-size='large' data-mobile-iframe='true'>" +
+                                    "<a class='fb-xfbml-parse-ignore' target='_blank' href='https://www.facebook.com/sharer/sharer.php?u="+ encodeURIComponent(data.articles[x].url) +";src=sdkpreparse'>" +
+                                        "<i class='fa fa-facebook fb-share-button' aria-hidden='true'></i>" +
+                                    "</a></div>" +
                                 "</div>" +
                             "</div>" +
                         "</div>";
                 })(x);
+            } // for loop
+
+            for (var a = 0; a < twittBtn.length; a++) {
+                
+                (function (a) {
+                    twittBtn[a].onclick = function() {
+                        twittArticle(data, a);
+                    }
+                })(a);
             }
-            backBtn.classList.remove('hideBackBtn');
+
+            
+            // "<a class='fb-xfbml-parse-ignore' target='_blank' href='https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse'>" +
+
+            backBtn.classList.remove('hideFooterBtn');
+            
             viewBtn.classList.add('footer-view-wrapper');
-            credDiv.classList.add('extend-cred-div');
+            credDiv.classList.remove('extend-cred-div');
             wrapper.innerHTML = "";
         }
-    }
+    } //onload function
 
 }
+
+
+// change view of news sources
+
+var viewBtn = document.querySelector("#footer__view-button"),
+    imgWrapper = document.getElementsByClassName('news__img'),
+    newsInner = document.getElementsByClassName('news__inner'),
+    newsImg = document.getElementsByClassName('inner-img'),
+    newsContainer = document.getElementsByClassName('news__container'),
+    newsContent = document.getElementsByClassName('news__content');
+    viewIcon1 = document.querySelector('.view-btn1');
+    viewIcon2 = document.querySelector('.view-btn2');
+
+
+function changeView() {
+
+    for (var j = 0; j < newsContainer.length; j++) {
+        (function (j) {
+                newsContainer[j].classList.toggle("news--view-change");
+                imgWrapper[j].classList.toggle("newsImgWrapper--view-change");
+                newsInner[j].classList.toggle("newsInner--view-change");
+                newsImg[j].classList.toggle("newsImg--view-change");
+                newsContent[j].classList.toggle("newsContent--view-change");
+        })(j);
+       
+    }
+
+    viewIcon1.classList.toggle('hide-view-btn1');
+    viewIcon2.classList.toggle('show-view-btn2');
+}
+
+viewBtn.addEventListener('click', changeView);
+
+// bookmark news sources
+
+function bookmarkNewsSource(that, x, data) {
+
+    myBookmark = {
+        id: x,
+        name: data.sources[x].name
+    };
+
+    // check if fullTask already exists
+    if (localStorage.getItem("bookmarks") === null) {
+        //if not init array		
+        var bookmarks = [];		
+        //add to an array
+        bookmarks.push(myBookmark);
+        //set localstorage and convert object to a string
+        localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+    } else {
+        var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
+        bookmarks.push(myBookmark);
+        localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+        }
+        
+        for (var i = 0; i < bookmarks.length; i++) {
+            if (bookmarks[i].name == data.sources[x].name) {
+                console.log(true);
+            } else {
+                console.log(false);
+            }
+        }
+}
+
+
+//fetch bookmarks from localstorage
+
+function fetchBookmarks () {
+
+    var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
+    
+    for (var i = 0; i < bookmarks.length; i++) {
+        wrapper3.innerHTML += 
+    
+            "<div class='news__container'>" + 
+                "<button class='news__bookmarkRemove-button'>" +
+                    "<i class='fa fa-recycle' aria-hidden='true'></i>" +
+                "</button>" +
+                "<div class='news__content'>" +
+                    "<div class='news__img'>" +
+                        "<img src='img/"+ bookmarks[i].id + ".png' alt='' class='inner-img'>" + 
+                    "</div>" +
+                    "<div class='news__inner'>" +
+                        "<span>" + bookmarks[i].name + "</span>" +
+                    "</div>" +
+                "</div>" +
+            "</div>";
+    }
+
+    console.log(bookmarks);
+
+    for (var i = 0; i < removeBookmarkBtn.length; i++) {
+        removeBookmarkBtn[i].style.color = '#531c1c';
+        removeBookmarkBtn[i].onclick = function() {
+            removeBookmarks(this);
+        }
+    }
+}
+
+// remove bookmarks
+
+var removeBookmarkBtn = document.getElementsByClassName('news__bookmarkRemove-button');
+
+
+function removeBookmarks(thatBtn) {
+
+    var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
+
+    var sourceName = thatBtn.parentNode.lastChild.lastChild.firstChild.innerHTML;
+    var thisNewsContainer = thatBtn.parentNode; 
+    for (var x = 0; x < bookmarks.length; x++) {
+        if (sourceName == bookmarks[x].name) {
+            bookmarks.splice(x,1);
+        }
+    }
+    thisNewsContainer.style.display = 'none';
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+
+}
+
+
+// display bookmarks window
+
+var footerBookmarkBtn = document.querySelector('#footer__bookmark-button');
+
+function showBookmarks () {
+
+    footerBookmarkBtn.classList.add('hideFooterBtn');
+    backBtn.classList.remove('hideFooterBtn');
+    // viewBtn.classList.add('footer-view-wrapper');
+    credDiv.classList.add('extend-cred-div');
+    wrapper.style.display = "none";
+    wrapper2.style.display = "none";
+    wrapper3.style.display = "flex";
+
+    wrapper.innerHTML = '';
+}
+
+// show bookmarked news sources
+
+footerBookmarkBtn.onclick = function() {
+
+    showBookmarks();
+    fetchBookmarks();
+}
+
+//share article on twitter
+
+function twittArticle (data, x) {
+
+    var articleTwitt = data.articles[x].url;
+    var twtLink = 'http://twitter.com/home?status=' + encodeURIComponent(articleTwitt);
+    window.open(twtLink,'_blank');
+}
+
 
 // function to display search input
 
@@ -139,38 +336,28 @@ var searchBtn = document.querySelector("#search-btn"),
     headerTitle = document.querySelector("h1");
 
 function displayInput() {
+
     searchInput.classList.toggle("showInput");
-    console.log(headerTitle);
     headerTitle.classList.toggle('hideHeaderTitle');
+
 }
 
 searchBtn.addEventListener("click", displayInput);
 
+//search through news sources
 
-// function to change view of news sources
-
-var viewBtn = document.querySelector("#footer__view-button"),
-    imgWrapper = document.getElementsByClassName('news__img'),
-    newsInner = document.getElementsByClassName('news__inner'),
-    newsImg = document.getElementsByClassName('inner-img'),
-    viewIcon1 = document.querySelector('.view-btn1');
-    viewIcon2 = document.querySelector('.view-btn2');
-
-
-function changeView() {
-
-    for (var j = 0; j < newsItem.length; j++) {
-        (function (j) {
-                newsItem[j].classList.toggle("news--view-change");
-                imgWrapper[j].classList.toggle("newsImgWrapper--view-change");
-                newsInner[j].classList.toggle("newsInner--view-change");
-                newsImg[j].classList.toggle("newsImg--view-change");
-        })(j);
-       
+function searchNewsSources(e) {
+    var searchValue = searchInput.value.toUpperCase();
+    for (var i = 0 ; i < newsContainer.length; i++) {
+            var c = newsContainer[i].lastChild.lastChild.innerHTML;
+            if (c.toUpperCase().indexOf(searchValue) > -1 ) {
+                console.log(true,searchValue,  c);
+                newsContainer[i].style.display = '';
+            } else {
+                console.log(false);
+                newsContainer[i].style.display = 'none';
+            }
     }
-
-    viewIcon1.classList.toggle('show-view-btn1');
-    viewIcon2.classList.toggle('show-view-btn2');
 }
 
-viewBtn.addEventListener('click', changeView);
+searchInput.addEventListener('keyup', searchNewsSources);

@@ -1,10 +1,10 @@
 .showInput {
     display: block;
-    width: 80%;
+    width: 85%;
     border-bottom: 0.01em solid rgb(36, 31, 17);
 }
 
-#wrapper {
+#wrapper, #wrapper-3 {
 
     .news--view-change {
         display: flex;
@@ -33,6 +33,10 @@
         font-size: 1.2em;
     }
 
+    .newsContent--view-change {
+        flex-direction: row;
+    }
+
     
 }
 
@@ -40,15 +44,13 @@
     opacity: 0;
 }
 
-.show-view-btn1 {
+.hide-view-btn1 {
     opacity: 0;
 }
 
-.show-view-btn2 {
-    opacity: 1;
-}
 
-.hideBackBtn {
+
+.hideFooterBtn {
     color: $white;
     border-right: none;
     display:none;
@@ -60,8 +62,12 @@
 
 footer {
 
+    .show-view-btn2 {
+        opacity: 1;
+    }
+
     .extend-cred-div {
-        width: calc((100% / 6) * 3);
+        width: calc((100% / 6) * 4);
     }
 
 }

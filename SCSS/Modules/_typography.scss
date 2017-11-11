@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
 body,html {
     font-size: calc(1em + 1vw);
-    font-family: Arial, Helvetica, sans-serif;
+    // font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 header {
@@ -14,11 +17,9 @@ header {
     .header__view-control--item {
         font-size: 0.7em;
     }
-
-    
 }
 
-.news {
+.news__container {
     font-size: 0.7em;
 
     .news__inner {
@@ -27,5 +28,8 @@ header {
 }
 
 footer {
-    // font-size: 2.5em;
+
+    a {
+        color: $black;
+    }
 }

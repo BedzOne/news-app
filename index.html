@@ -6,15 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="desription" content="News Application - based on News API - https://newsapi.org">
-    <title>Document</title>
+    <title>News App</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
+   <!-- Load Facebook SDK for JavaScript -->
+   <div id="fb-root"></div>
+   <script>(function(d, s, id) {
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) return;
+     js = d.createElement(s); js.id = id;
+     js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.11';
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));</script>
+
     <!-- HEADER -->
 
     <header>
-        <h1 class="header__title">News Market</h1>
+        <h1 class="header__title">News App</h1>
         <input type="text" class="header__search-input" placeholder='Search for a news source'>
         <button id="search-btn"><i class="fa fa-search" aria-hidden="true"></i></button>
         
@@ -25,6 +35,7 @@
     <main>
         <div id="wrapper"></div>    
         <div id="wrapper-2"></div> 
+        <div id="wrapper-3"></div> 
     </main>
    
     <!-- FOOTER -->
@@ -49,8 +60,8 @@
     </footer>
 
     <!-- SCRIPTS -->
+
     <script src="https://use.fontawesome.com/fe8b3ea96a.js"></script>
-    
     <script src="script.js"></script>
 </body>
 </html>
