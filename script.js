@@ -10,9 +10,11 @@ var wrapper = document.querySelector("#wrapper"),
     twittBtn = document.getElementsByClassName('twitt-btn');
 
 // EVENT LISTENERS to load news sources
+
 window.addEventListener("load", displayNewsSources);
 
 backBtn.onclick = function() {
+
     displayNewsSources();
     footerBookmarkBtn.classList.remove('hideFooterBtn');
     
@@ -30,18 +32,48 @@ function displayNewsSources() {
 
     xhr.open(method, URL);
     appendSources(xhr);
-    
     xhr.send();
 
 }
 
-//fetch articles
+// display bookmarked news sources
 
-function getRequest(b, i) {
+function displayBookmarkedSources() {
+    
+        var xhr = new XMLHttpRequest();
+        var method = "GET";
+        var URL = "https://newsapi.org/v1/sources?language=en";
+    
+        xhr.open(method, URL);
+        
+        fetchBookmarks(xhr);
+        xhr.send();
+    
+}
+
+// show articles from bookmarked news sources
+
+function getBookmarkedArticles(bookmarks, i) {
     
         var request = new XMLHttpRequest();
         var method = "GET";  
-        var URL = "https://newsapi.org/v1/articles?source="+ b.sources[i].id +"&sortBy=top&apiKey=f06cf653fb394fc9b33e490f5ff5a9bc";
+        var URL = "https://newsapi.org/v1/articles?source="+ bookmarks[i].id +"&sortBy=top&apiKey=f06cf653fb394fc9b33e490f5ff5a9bc";
+        request.open(method, URL);
+        showArticle(request);
+        request.onerror = function() {
+            console.log("error");
+        }
+        request.send();
+    }
+    
+
+//fetch articles
+
+function getRequest(data, i, bookmarks) {
+    
+        var request = new XMLHttpRequest();
+        var method = "GET";  
+        var URL = "https://newsapi.org/v1/articles?source="+ data.sources[i].id +"&sortBy=top&apiKey=f06cf653fb394fc9b33e490f5ff5a9bc";
         // request.responseType = "json";
         request.open(method, URL);
         showArticle(request);
@@ -61,7 +93,6 @@ function appendSources(xhr) {
         wrapper.style.display = "flex";
         wrapper2.style.display = "none";
         wrapper3.style.display = "none";
-        // console.log(data.sources);
         for (var i = 0; i < data.sources.length - 1; i++) {
             wrapper.innerHTML += 
             
@@ -80,6 +111,7 @@ function appendSources(xhr) {
             "</div>";
 
         }  // first for loop  
+
         for (var x = 0; x < bookmarkBtn.length; x++) {
             
             (function (x) {
@@ -89,7 +121,6 @@ function appendSources(xhr) {
             })(x);
         }
 
-        // return false;
          for (var j = 0; j < newsContainer.length - 1; j++) {
             (function (j) {
                 newsContent[j].onclick = function() {
@@ -128,7 +159,6 @@ function showArticle(newRequest) {
                 // "<div>" +
                 // "<img src='img/"+y+ ".png' alt='' class='inner-img'>" ;
             }
-            console.log(data.articles);
             for (var x = 0; x < data.articles.length; x++) {
                 (function (x) {
                     wrapper2.innerHTML +=
@@ -151,6 +181,8 @@ function showArticle(newRequest) {
                 })(x);
             } // for loop
 
+            // share article on twitter
+
             for (var a = 0; a < twittBtn.length; a++) {
                 
                 (function (a) {
@@ -160,11 +192,9 @@ function showArticle(newRequest) {
                 })(a);
             }
 
-            
-            // "<a class='fb-xfbml-parse-ignore' target='_blank' href='https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse'>" +
+            // change styles of footer buttons
 
             backBtn.classList.remove('hideFooterBtn');
-            
             viewBtn.classList.add('footer-view-wrapper');
             credDiv.classList.remove('extend-cred-div');
             wrapper.innerHTML = "";
@@ -172,7 +202,6 @@ function showArticle(newRequest) {
     } //onload function
 
 }
-
 
 // change view of news sources
 
@@ -210,7 +239,8 @@ viewBtn.addEventListener('click', changeView);
 function bookmarkNewsSource(that, x, data) {
 
     myBookmark = {
-        id: x,
+        count: x,
+        id: data.sources[x].id,
         name: data.sources[x].name
     };
 
@@ -228,8 +258,10 @@ function bookmarkNewsSource(that, x, data) {
         localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
         }
         
+        var exist = false;
         for (var i = 0; i < bookmarks.length; i++) {
             if (bookmarks[i].name == data.sources[x].name) {
+                exist = true;
                 console.log(true);
             } else {
                 console.log(false);
@@ -240,30 +272,50 @@ function bookmarkNewsSource(that, x, data) {
 
 //fetch bookmarks from localstorage
 
-function fetchBookmarks () {
+function fetchBookmarks (xhr) {
 
     var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
-    
-    for (var i = 0; i < bookmarks.length; i++) {
-        wrapper3.innerHTML += 
-    
-            "<div class='news__container'>" + 
-                "<button class='news__bookmarkRemove-button'>" +
-                    "<i class='fa fa-recycle' aria-hidden='true'></i>" +
-                "</button>" +
-                "<div class='news__content'>" +
-                    "<div class='news__img'>" +
-                        "<img src='img/"+ bookmarks[i].id + ".png' alt='' class='inner-img'>" + 
+    if (bookmarks != null) {
+        for (var i = 0; i < bookmarks.length; i++) {
+            wrapper3.innerHTML += 
+        
+                "<div class='news__container'>" + 
+                    "<button class='news__bookmarkRemove-button'>" +
+                        "<i class='fa fa-recycle' aria-hidden='true'></i>" +
+                    "</button>" +
+                    "<div class='news__content'>" +
+                        "<div class='news__img'>" +
+                            "<img src='img/"+ bookmarks[i].count + ".png' alt='' class='inner-img'>" + 
+                        "</div>" +
+                        "<div class='news__inner'>" +
+                            "<span>" + bookmarks[i].name + "</span>" +
+                        "</div>" +
                     "</div>" +
-                    "<div class='news__inner'>" +
-                        "<span>" + bookmarks[i].name + "</span>" +
-                    "</div>" +
-                "</div>" +
-            "</div>";
+                "</div>";
+        }
+    } else if (bookmarks === null){
+        wrapper3.innerHTML = '';
     }
+    
+    xhr.onload = function() {
+        credDiv.classList.add('extend-cred-div');
+        var data = JSON.parse(xhr.response);
 
-    console.log(bookmarks);
+        for (var j = 0; j < bookmarks.length; j++) {
+            (function (j) {
+                newsContent[j].onclick = function() {
+                    footerBookmarkBtn.classList.remove('hideFooterBtn');
+                    getBookmarkedArticles(bookmarks, j);
+                    wrapper3.style.display = 'none';
+                    wrapper3.innerHTML = '';
+                    
+                    
+                }
+            })(j);
+        } // second for loop
 
+    }
+        
     for (var i = 0; i < removeBookmarkBtn.length; i++) {
         removeBookmarkBtn[i].style.color = '#531c1c';
         removeBookmarkBtn[i].onclick = function() {
@@ -283,11 +335,13 @@ function removeBookmarks(thatBtn) {
 
     var sourceName = thatBtn.parentNode.lastChild.lastChild.firstChild.innerHTML;
     var thisNewsContainer = thatBtn.parentNode; 
+    
     for (var x = 0; x < bookmarks.length; x++) {
         if (sourceName == bookmarks[x].name) {
             bookmarks.splice(x,1);
         }
     }
+
     thisNewsContainer.style.display = 'none';
     localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
 
@@ -302,13 +356,13 @@ function showBookmarks () {
 
     footerBookmarkBtn.classList.add('hideFooterBtn');
     backBtn.classList.remove('hideFooterBtn');
-    // viewBtn.classList.add('footer-view-wrapper');
     credDiv.classList.add('extend-cred-div');
     wrapper.style.display = "none";
     wrapper2.style.display = "none";
     wrapper3.style.display = "flex";
 
     wrapper.innerHTML = '';
+    wrapper2.innerHTML = '';
 }
 
 // show bookmarked news sources
@@ -316,7 +370,7 @@ function showBookmarks () {
 footerBookmarkBtn.onclick = function() {
 
     showBookmarks();
-    fetchBookmarks();
+    displayBookmarkedSources();
 }
 
 //share article on twitter
@@ -335,12 +389,21 @@ var searchBtn = document.querySelector("#search-btn"),
     searchInput = document.querySelector(".header__search-input"),
     headerTitle = document.querySelector("h1");
 
-function displayInput() {
+function displayInput(e) {
 
     searchInput.classList.toggle("showInput");
     headerTitle.classList.toggle('hideHeaderTitle');
+    searchInput.addEventListener('focus');
+    if (e.target === wrapper) {
+        console.log(true);
+    }
 
 }
+
+searchInput.addEventListener('blur', function() {
+    searchInput.classList.remove("showInput");
+    headerTitle.classList.remove('hideHeaderTitle');
+})
 
 searchBtn.addEventListener("click", displayInput);
 
@@ -351,10 +414,8 @@ function searchNewsSources(e) {
     for (var i = 0 ; i < newsContainer.length; i++) {
             var c = newsContainer[i].lastChild.lastChild.innerHTML;
             if (c.toUpperCase().indexOf(searchValue) > -1 ) {
-                console.log(true,searchValue,  c);
                 newsContainer[i].style.display = '';
             } else {
-                console.log(false);
                 newsContainer[i].style.display = 'none';
             }
     }
