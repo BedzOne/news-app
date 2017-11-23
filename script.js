@@ -16,13 +16,13 @@ window.addEventListener("load", displayNewsSources);
 backBtn.onclick = function() {
 
     displayNewsSources();
+
     footerBookmarkBtn.classList.remove('hideFooterBtn');
-    
     viewBtn.classList.remove('footer-view-wrapper');
     credDiv.classList.add('extend-cred-div');
 }
 
-//function to display news sources on home page
+//fetch data for news sources on main page
 
 function displayNewsSources() {
 
@@ -36,7 +36,7 @@ function displayNewsSources() {
 
 }
 
-// display bookmarked news sources
+// fetch data for  bookmarked news sources
 
 function displayBookmarkedSources() {
     
@@ -51,7 +51,7 @@ function displayBookmarkedSources() {
     
 }
 
-// show articles from bookmarked news sources
+// fetch articles data for bookmarked news sources
 
 function getBookmarkedArticles(bookmarks, i) {
     
@@ -66,8 +66,7 @@ function getBookmarkedArticles(bookmarks, i) {
         request.send();
     }
     
-
-//fetch articles
+//fetch data 
 
 function getRequest(data, i, bookmarks) {
     
@@ -83,22 +82,24 @@ function getRequest(data, i, bookmarks) {
         request.send();
     }
 
-// show news sources in html
+// show news sources on main page
 
 function appendSources(xhr) {
 
     xhr.onload = function() {
 
         var data = JSON.parse(xhr.response);
+
         wrapper.style.display = "flex";
         wrapper2.style.display = "none";
         wrapper3.style.display = "none";
+
         for (var i = 0; i < data.sources.length - 1; i++) {
             wrapper.innerHTML += 
             
             "<div class='news__container'>" + 
                 "<button class='news__bookmark-button'>" +
-                    "<i class='fa fa-bookmark-o' aria-hidden='true'></i>" +
+                    "<i class='fa fa-heart-o' aria-hidden='true'></i>" +
                 "</button>" +
                 "<div class='news__content'>" +
                     "<div class='news__img'>" +
@@ -109,32 +110,55 @@ function appendSources(xhr) {
                     "</div>" +
                 "</div>" +
             "</div>";
-
         }  // first for loop  
 
+        //attach event listener to bookmark button
+        var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
         for (var x = 0; x < bookmarkBtn.length; x++) {
             
             (function (x) {
                 bookmarkBtn[x].onclick = function() {
                     bookmarkNewsSource(this, x, data);
+                    var exist = false;
+                    var newsName = this.nextElementSibling.lastChild.firstChild.innerHTML;
+                    for (var i = 0; i < bookmarks.length; i++) {
+                        if (newsName == bookmarks[i].name) {
+                            exist = true;
+                            console.log(exist);
+                            // if (exist == true) {
+                                
+                            // }
+                            // break;
+                        } else {
+                            exist = false;
+                            bookmarkNewsSource(this, x, data);
+                            console.log(exist);
+                        }
+                    }
+                    
                 }
             })(x);
         }
 
-         for (var j = 0; j < newsContainer.length - 1; j++) {
+        //attach event lisetner to news container
+
+        for (var j = 0; j < newsContainer.length - 1; j++) {
             (function (j) {
                 newsContent[j].onclick = function() {
+                    
                     getRequest(data, j);
                     
                 }
             })(j);
-        } // second for loop
+        }
         
-        bookmarkBtn[31].style.color = 'white';
-        bookmarkBtn[35].style.color = 'white';
-        bookmarkBtn[53].style.color = 'white';
-        bookmarkBtn[55].style.color = 'white';
-        bookmarkBtn[57].style.color = 'white';
+        // change styles of footer buttons and wrappers
+
+        // bookmarkBtn[31].style.color = 'white';
+        // bookmarkBtn[35].style.color = 'white';
+        // bookmarkBtn[53].style.color = 'white';
+        // bookmarkBtn[55].style.color = 'white';
+        // bookmarkBtn[57].style.color = 'white';
         wrapper2.innerHTML = "";
         wrapper3.innerHTML = "";
         backBtn.classList.add('hideFooterBtn');
@@ -142,16 +166,19 @@ function appendSources(xhr) {
     } // onload function
 }
 
-//show articles in html
+//show articles 
 
 function showArticle(newRequest) {
 
     newRequest.onload = function() {
 
-    var data = JSON.parse(newRequest.response);
+        var data = JSON.parse(newRequest.response);
+
         if (newRequest.status >= 200 && newRequest.status <= 400) {
             wrapper.style.display = "none";
             wrapper2.style.display = "flex";
+
+            // display news title on the top of the page
 
             for (var y = 0; y < 1; y++) {
                 wrapper2.innerHTML += 
@@ -159,6 +186,9 @@ function showArticle(newRequest) {
                 // "<div>" +
                 // "<img src='img/"+y+ ".png' alt='' class='inner-img'>" ;
             }
+
+            // display articles 
+
             for (var x = 0; x < data.articles.length; x++) {
                 (function (x) {
                     wrapper2.innerHTML +=
@@ -203,7 +233,7 @@ function showArticle(newRequest) {
 
 }
 
-// change view of news sources
+// change view of news sources 
 
 var viewBtn = document.querySelector("#footer__view-button"),
     imgWrapper = document.getElementsByClassName('news__img'),
@@ -224,6 +254,7 @@ function changeView() {
                 newsInner[j].classList.toggle("newsInner--view-change");
                 newsImg[j].classList.toggle("newsImg--view-change");
                 newsContent[j].classList.toggle("newsContent--view-change");
+                bookmarkBtn[j].classList.toggle("bookmark-button--position");
         })(j);
        
     }
@@ -236,7 +267,7 @@ viewBtn.addEventListener('click', changeView);
 
 // bookmark news sources
 
-function bookmarkNewsSource(that, x, data) {
+function bookmarkNewsSource(that, x, data, exist, n) {
 
     myBookmark = {
         count: x,
@@ -258,15 +289,8 @@ function bookmarkNewsSource(that, x, data) {
         localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
         }
         
-        var exist = false;
-        for (var i = 0; i < bookmarks.length; i++) {
-            if (bookmarks[i].name == data.sources[x].name) {
-                exist = true;
-                console.log(true);
-            } else {
-                console.log(false);
-            }
-        }
+        
+       
 }
 
 
@@ -275,7 +299,7 @@ function bookmarkNewsSource(that, x, data) {
 function fetchBookmarks (xhr) {
 
     var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
-    if (bookmarks != null) {
+    if (bookmarks !== null) {
         for (var i = 0; i < bookmarks.length; i++) {
             wrapper3.innerHTML += 
         
@@ -315,7 +339,9 @@ function fetchBookmarks (xhr) {
         } // second for loop
 
     }
-        
+    
+    // click event to remove bookmarked news source
+
     for (var i = 0; i < removeBookmarkBtn.length; i++) {
         removeBookmarkBtn[i].style.color = '#531c1c';
         removeBookmarkBtn[i].onclick = function() {
@@ -327,7 +353,6 @@ function fetchBookmarks (xhr) {
 // remove bookmarks
 
 var removeBookmarkBtn = document.getElementsByClassName('news__bookmarkRemove-button');
-
 
 function removeBookmarks(thatBtn) {
 
@@ -382,7 +407,6 @@ function twittArticle (data, x) {
     window.open(twtLink,'_blank');
 }
 
-
 // function to display search input
 
 var searchBtn = document.querySelector("#search-btn"),
@@ -393,12 +417,12 @@ function displayInput(e) {
 
     searchInput.classList.toggle("showInput");
     headerTitle.classList.toggle('hideHeaderTitle');
-    searchInput.addEventListener('focus');
-    if (e.target === wrapper) {
-        console.log(true);
-    }
+    searchInput.focus();
 
+    searchInput.value = "";
 }
+
+// close input when it loses focus
 
 searchInput.addEventListener('blur', function() {
     searchInput.classList.remove("showInput");

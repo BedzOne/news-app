@@ -8,10 +8,15 @@ body,html {
 
 header {
 
+    h1, i {
+        color: white;
+    }
+
     h1 {
         font-size: 0.9em;
-        color: $darkGrey;
-        font-weight: 600;
+        color: white;
+        letter-spacing: 0.08em;
+        font-weight: normal;
     }
 
     .header__view-control--item {

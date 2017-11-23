@@ -8,6 +8,7 @@ html {
     padding: 0;
 }
 
+body
 main, 
 header,
 footer,
@@ -26,7 +27,7 @@ button,
     @include flexbox();
 }
 
-
+body,
 main,
 .news__container,
 .news__content,
@@ -44,6 +45,7 @@ header,
     @include flex-wrap(wrap);
 }
 
+body,
 header,
 footer,
 #wrapper-2,
@@ -66,3 +68,4 @@ footer {
         @include flexbox();
     }
 }
+

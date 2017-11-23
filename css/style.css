@@ -7,6 +7,7 @@ html {
   margin: 0;
   padding: 0; }
 
+body
 main,
 header,
 footer,
@@ -28,6 +29,7 @@ button,
   display: -webkit-flex;
   display: flex; }
 
+body,
 main,
 .news__container,
 .news__content,
@@ -48,6 +50,7 @@ header,
   -ms-flex-wrap: wrap;
   flex-wrap: wrap; }
 
+body,
 header,
 footer,
 #wrapper-2,
@@ -85,7 +88,7 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  background: #6c87d1;
+  background: #6196cf;
   border-bottom: 0.05em solid #9c9c9c;
   padding: 0.1em 0;
   height: 2em;
@@ -276,10 +279,13 @@ button {
 
 .news__bookmark-button, .news__bookmarkRemove-button {
   position: absolute;
-  top: 0.1em;
+  top: 3.5em;
   right: 0em;
   font-size: 1.5em;
-  color: #111; }
+  color: brown; }
+
+.news__bookmark-button i::before {
+  font-size: 0.9em; }
 
 footer button {
   border-right: 0.05em solid #9c9c9c; }
@@ -294,10 +300,13 @@ body, html {
   font-size: calc(1em + 1vw);
   font-family: 'Roboto', sans-serif; }
 
+header h1, header i {
+  color: white; }
 header h1 {
   font-size: 0.9em;
-  color: #5c5b5b;
-  font-weight: 600; }
+  color: white;
+  letter-spacing: 0.08em;
+  font-weight: normal; }
 header .header__view-control--item {
   font-size: 0.7em; }
 
@@ -334,6 +343,8 @@ footer a {
   font-size: 1.2em; }
 #wrapper .newsContent--view-change, #wrapper-3 .newsContent--view-change {
   flex-direction: row; }
+#wrapper .bookmark-button--position, #wrapper-3 .bookmark-button--position {
+  top: 0.1em; }
 
 .hideHeaderTitle {
   opacity: 0; }
@@ -353,5 +364,12 @@ footer .show-view-btn2 {
   opacity: 1; }
 footer .extend-cred-div {
   width: calc((100% / 6) * 4); }
+
+@media screen and (min-width: 500px) {
+  body {
+    width: 500px; }
+
+  header, footer {
+    width: 500px; } }
 
 /*# sourceMappingURL=style.css.map */

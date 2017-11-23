@@ -3,7 +3,7 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    background: $blue;
+    background: rgb(97, 150, 207);
     border-bottom: 0.05em solid $grey;
     padding: 0.1em 0;
     height: 2em;
@@ -22,7 +22,6 @@ h1{
 
 .header__search-input {
     position: absolute;
-    // top: 0.9em;
     left: 0.5em;
     width: 0%;
     height: 2.4em;

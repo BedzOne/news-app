@@ -13,11 +13,16 @@ button {
 
 .news__bookmark-button, .news__bookmarkRemove-button {
     position: absolute;
-    top: 0.1em;
+    top: 3.5em;
     right: 0em;
     font-size: 1.5em;
-    color: $black;
+    color: brown;
+}
 
+.news__bookmark-button {
+    i::before {
+        font-size: 0.9em;
+    }
 }
 
 // .news__container
