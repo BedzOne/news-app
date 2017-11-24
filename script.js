@@ -14,9 +14,7 @@ var wrapper = document.querySelector("#wrapper"),
 window.addEventListener("load", displayNewsSources);
 
 backBtn.onclick = function() {
-
     displayNewsSources();
-
     footerBookmarkBtn.classList.remove('hideFooterBtn');
     viewBtn.classList.remove('footer-view-wrapper');
     credDiv.classList.add('extend-cred-div');
@@ -25,7 +23,6 @@ backBtn.onclick = function() {
 //fetch data for news sources on main page
 
 function displayNewsSources() {
-
     var xhr = new XMLHttpRequest();
     var method = "GET";
     var URL = "https://newsapi.org/v1/sources?language=en";
@@ -33,28 +30,23 @@ function displayNewsSources() {
     xhr.open(method, URL);
     appendSources(xhr);
     xhr.send();
-
 }
 
 // fetch data for  bookmarked news sources
 
-function displayBookmarkedSources() {
-    
+function displayBookmarkedSources() {    
         var xhr = new XMLHttpRequest();
         var method = "GET";
         var URL = "https://newsapi.org/v1/sources?language=en";
     
         xhr.open(method, URL);
-        
         fetchBookmarks(xhr);
-        xhr.send();
-    
+        xhr.send();   
 }
 
 // fetch articles data for bookmarked news sources
 
-function getBookmarkedArticles(bookmarks, i) {
-    
+function getBookmarkedArticles(bookmarks, i) {   
         var request = new XMLHttpRequest();
         var method = "GET";  
         var URL = "https://newsapi.org/v1/articles?source="+ bookmarks[i].id +"&sortBy=top&apiKey=f06cf653fb394fc9b33e490f5ff5a9bc";
@@ -68,8 +60,7 @@ function getBookmarkedArticles(bookmarks, i) {
     
 //fetch data 
 
-function getRequest(data, i, bookmarks) {
-    
+function getRequest(data, i) {   
         var request = new XMLHttpRequest();
         var method = "GET";  
         var URL = "https://newsapi.org/v1/articles?source="+ data.sources[i].id +"&sortBy=top&apiKey=f06cf653fb394fc9b33e490f5ff5a9bc";
@@ -85,9 +76,7 @@ function getRequest(data, i, bookmarks) {
 // show news sources on main page
 
 function appendSources(xhr) {
-
     xhr.onload = function() {
-
         var data = JSON.parse(xhr.response);
 
         wrapper.style.display = "flex";
@@ -95,8 +84,7 @@ function appendSources(xhr) {
         wrapper3.style.display = "none";
 
         for (var i = 0; i < data.sources.length - 1; i++) {
-            wrapper.innerHTML += 
-            
+            wrapper.innerHTML +=        
             "<div class='news__container'>" + 
                 "<button class='news__bookmark-button'>" +
                     "<i class='fa fa-heart-o' aria-hidden='true'></i>" +
@@ -111,31 +99,46 @@ function appendSources(xhr) {
                 "</div>" +
             "</div>";
         }  // first for loop  
-
         //attach event listener to bookmark button
-        var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
-        for (var x = 0; x < bookmarkBtn.length; x++) {
-            
+        
+        
+        for (var x = 0; x < bookmarkBtn.length; x++) {  
             (function (x) {
                 bookmarkBtn[x].onclick = function() {
-                    bookmarkNewsSource(this, x, data);
                     var exist = false;
+                    var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
                     var newsName = this.nextElementSibling.lastChild.firstChild.innerHTML;
-                    for (var i = 0; i < bookmarks.length; i++) {
-                        if (newsName == bookmarks[i].name) {
-                            exist = true;
-                            console.log(exist);
-                            // if (exist == true) {
-                                
-                            // }
-                            // break;
-                        } else {
-                            exist = false;
-                            bookmarkNewsSource(this, x, data);
-                            console.log(exist);
-                        }
+                    if (bookmarks == null) {
+                        bookmarkNewsSource(this, x, data);     
+                    } else {
+                        bookmarks.forEach((bookmark, index) => {
+                            console.log(bookmark, index);
+                            if (newsName == bookmarks[index].name) {
+                                console.log('match');
+                                console.log(newsName);
+                                exist = true;
+                                console.log(exist);
+                            } 
+
+                            if (exist == true) {
+                                return false;
+                            } else {
+                                bookmarkNewsSource(this, x, data);  
+                                console.log('no match');
+                            }
+                        });
+                        // for (var a = 0; a < bookmarks.length; a++) {    
+                        //     console.log(bookmarks.length);                                      
+                        //     console.log(a);
+                        //     if (newsName == bookmarks[a].name) {
+                        //         console.log(newsName, 'exists');
+                        //         return false;
+                        //     } else {
+                        //         bookmarkNewsSource(this, x, data); 
+                        //     }
+                        //     console.log(a);
+                        // }
                     }
-                    
                 }
             })(x);
         }
@@ -144,48 +147,32 @@ function appendSources(xhr) {
 
         for (var j = 0; j < newsContainer.length - 1; j++) {
             (function (j) {
-                newsContent[j].onclick = function() {
-                    
+                newsContent[j].onclick = function() {                   
                     getRequest(data, j);
-                    
+                    console.log(data);
+                    wrapper2.innerHTML +=
+                        "<figure class='article__top-image'>" +
+                            "<img src='img/"+j+ ".png' alt='' class='inner-img'>" +
+                        "</figure>"
                 }
             })(j);
-        }
-        
+        }       
         // change styles of footer buttons and wrappers
-
-        // bookmarkBtn[31].style.color = 'white';
-        // bookmarkBtn[35].style.color = 'white';
-        // bookmarkBtn[53].style.color = 'white';
-        // bookmarkBtn[55].style.color = 'white';
-        // bookmarkBtn[57].style.color = 'white';
         wrapper2.innerHTML = "";
         wrapper3.innerHTML = "";
         backBtn.classList.add('hideFooterBtn');
-
     } // onload function
 }
 
 //show articles 
 
 function showArticle(newRequest) {
-
     newRequest.onload = function() {
-
         var data = JSON.parse(newRequest.response);
 
         if (newRequest.status >= 200 && newRequest.status <= 400) {
             wrapper.style.display = "none";
             wrapper2.style.display = "flex";
-
-            // display news title on the top of the page
-
-            for (var y = 0; y < 1; y++) {
-                wrapper2.innerHTML += 
-                "<h3>" + data.source + "</h3>";
-                // "<div>" +
-                // "<img src='img/"+y+ ".png' alt='' class='inner-img'>" ;
-            }
 
             // display articles 
 
@@ -214,14 +201,12 @@ function showArticle(newRequest) {
             // share article on twitter
 
             for (var a = 0; a < twittBtn.length; a++) {
-                
                 (function (a) {
                     twittBtn[a].onclick = function() {
                         twittArticle(data, a);
                     }
                 })(a);
             }
-
             // change styles of footer buttons
 
             backBtn.classList.remove('hideFooterBtn');
@@ -230,7 +215,6 @@ function showArticle(newRequest) {
             wrapper.innerHTML = "";
         }
     } //onload function
-
 }
 
 // change view of news sources 
@@ -244,21 +228,17 @@ var viewBtn = document.querySelector("#footer__view-button"),
     viewIcon1 = document.querySelector('.view-btn1');
     viewIcon2 = document.querySelector('.view-btn2');
 
-
 function changeView() {
-
     for (var j = 0; j < newsContainer.length; j++) {
         (function (j) {
-                newsContainer[j].classList.toggle("news--view-change");
-                imgWrapper[j].classList.toggle("newsImgWrapper--view-change");
-                newsInner[j].classList.toggle("newsInner--view-change");
-                newsImg[j].classList.toggle("newsImg--view-change");
-                newsContent[j].classList.toggle("newsContent--view-change");
-                bookmarkBtn[j].classList.toggle("bookmark-button--position");
-        })(j);
-       
+            newsContainer[j].classList.toggle("news--view-change");
+            imgWrapper[j].classList.toggle("newsImgWrapper--view-change");
+            newsInner[j].classList.toggle("newsInner--view-change");
+            newsImg[j].classList.toggle("newsImg--view-change");
+            newsContent[j].classList.toggle("newsContent--view-change");
+            bookmarkBtn[j].classList.toggle("bookmark-button--position");
+        })(j);       
     }
-
     viewIcon1.classList.toggle('hide-view-btn1');
     viewIcon2.classList.toggle('show-view-btn2');
 }
@@ -268,7 +248,6 @@ viewBtn.addEventListener('click', changeView);
 // bookmark news sources
 
 function bookmarkNewsSource(that, x, data, exist, n) {
-
     myBookmark = {
         count: x,
         id: data.sources[x].id,
@@ -287,17 +266,12 @@ function bookmarkNewsSource(that, x, data, exist, n) {
         var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
         bookmarks.push(myBookmark);
         localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-        }
-        
-        
-       
+        }      
 }
-
 
 //fetch bookmarks from localstorage
 
 function fetchBookmarks (xhr) {
-
     var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
     if (bookmarks !== null) {
         for (var i = 0; i < bookmarks.length; i++) {
@@ -324,20 +298,18 @@ function fetchBookmarks (xhr) {
     xhr.onload = function() {
         credDiv.classList.add('extend-cred-div');
         var data = JSON.parse(xhr.response);
-
-        for (var j = 0; j < bookmarks.length; j++) {
-            (function (j) {
-                newsContent[j].onclick = function() {
-                    footerBookmarkBtn.classList.remove('hideFooterBtn');
-                    getBookmarkedArticles(bookmarks, j);
-                    wrapper3.style.display = 'none';
-                    wrapper3.innerHTML = '';
-                    
-                    
-                }
-            })(j);
-        } // second for loop
-
+        if (bookmarks !== null) {
+            for (var j = 0; j < bookmarks.length; j++) {
+                (function (j) {
+                    newsContent[j].onclick = function() {
+                        footerBookmarkBtn.classList.remove('hideFooterBtn');
+                        getBookmarkedArticles(bookmarks, j);
+                        wrapper3.style.display = 'none';
+                        wrapper3.innerHTML = '';         
+                    }
+                })(j);
+            } // second for loop
+        }
     }
     
     // click event to remove bookmarked news source
@@ -355,21 +327,18 @@ function fetchBookmarks (xhr) {
 var removeBookmarkBtn = document.getElementsByClassName('news__bookmarkRemove-button');
 
 function removeBookmarks(thatBtn) {
-
     var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
-
     var sourceName = thatBtn.parentNode.lastChild.lastChild.firstChild.innerHTML;
     var thisNewsContainer = thatBtn.parentNode; 
     
     for (var x = 0; x < bookmarks.length; x++) {
         if (sourceName == bookmarks[x].name) {
             bookmarks.splice(x,1);
+            console.log(bookmarks);
         }
     }
-
     thisNewsContainer.style.display = 'none';
     localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-
 }
 
 
@@ -378,7 +347,6 @@ function removeBookmarks(thatBtn) {
 var footerBookmarkBtn = document.querySelector('#footer__bookmark-button');
 
 function showBookmarks () {
-
     footerBookmarkBtn.classList.add('hideFooterBtn');
     backBtn.classList.remove('hideFooterBtn');
     credDiv.classList.add('extend-cred-div');
@@ -386,6 +354,7 @@ function showBookmarks () {
     wrapper2.style.display = "none";
     wrapper3.style.display = "flex";
 
+    //empty two wrappers
     wrapper.innerHTML = '';
     wrapper2.innerHTML = '';
 }
@@ -393,7 +362,6 @@ function showBookmarks () {
 // show bookmarked news sources
 
 footerBookmarkBtn.onclick = function() {
-
     showBookmarks();
     displayBookmarkedSources();
 }
@@ -401,7 +369,6 @@ footerBookmarkBtn.onclick = function() {
 //share article on twitter
 
 function twittArticle (data, x) {
-
     var articleTwitt = data.articles[x].url;
     var twtLink = 'http://twitter.com/home?status=' + encodeURIComponent(articleTwitt);
     window.open(twtLink,'_blank');
@@ -414,17 +381,16 @@ var searchBtn = document.querySelector("#search-btn"),
     headerTitle = document.querySelector("h1");
 
 function displayInput(e) {
-
     searchInput.classList.toggle("showInput");
     headerTitle.classList.toggle('hideHeaderTitle');
-    searchInput.focus();
 
+    searchInput.focus();
     searchInput.value = "";
 }
 
 // close input when it loses focus
 
-searchInput.addEventListener('blur', function() {
+searchInput.addEventListener('blur', () => {
     searchInput.classList.remove("showInput");
     headerTitle.classList.remove('hideHeaderTitle');
 })
@@ -436,12 +402,12 @@ searchBtn.addEventListener("click", displayInput);
 function searchNewsSources(e) {
     var searchValue = searchInput.value.toUpperCase();
     for (var i = 0 ; i < newsContainer.length; i++) {
-            var c = newsContainer[i].lastChild.lastChild.innerHTML;
-            if (c.toUpperCase().indexOf(searchValue) > -1 ) {
-                newsContainer[i].style.display = '';
-            } else {
-                newsContainer[i].style.display = 'none';
-            }
+        var c = newsContainer[i].lastChild.lastChild.innerHTML;
+        if (c.toUpperCase().indexOf(searchValue) > -1 ) {
+            newsContainer[i].style.display = '';
+        } else {
+            newsContainer[i].style.display = 'none';
+        }
     }
 }
 

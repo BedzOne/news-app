@@ -169,6 +169,13 @@ main {
   margin: 0; }
 #wrapper-2 i {
   color: #9c9c9c; }
+#wrapper-2 .article__top-image {
+  width: 60%;
+  height: 6em;
+  margin: 0; }
+  #wrapper-2 .article__top-image img {
+    width: 100%;
+    height: 100%; }
 #wrapper-2 .article__container {
   -webkit-flex-direction: row;
   -moz-flex-direction: row;
