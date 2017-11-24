@@ -105,40 +105,7 @@ function appendSources(xhr) {
         for (var x = 0; x < bookmarkBtn.length; x++) {  
             (function (x) {
                 bookmarkBtn[x].onclick = function() {
-                    var exist = false;
-                    var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
-                    var newsName = this.nextElementSibling.lastChild.firstChild.innerHTML;
-                    if (bookmarks == null) {
-                        bookmarkNewsSource(this, x, data);     
-                    } else {
-                        bookmarks.forEach((bookmark, index) => {
-                            console.log(bookmark, index);
-                            if (newsName == bookmarks[index].name) {
-                                console.log('match');
-                                console.log(newsName);
-                                exist = true;
-                                console.log(exist);
-                            } 
-
-                            if (exist == true) {
-                                return false;
-                            } else {
-                                bookmarkNewsSource(this, x, data);  
-                                console.log('no match');
-                            }
-                        });
-                        // for (var a = 0; a < bookmarks.length; a++) {    
-                        //     console.log(bookmarks.length);                                      
-                        //     console.log(a);
-                        //     if (newsName == bookmarks[a].name) {
-                        //         console.log(newsName, 'exists');
-                        //         return false;
-                        //     } else {
-                        //         bookmarkNewsSource(this, x, data); 
-                        //     }
-                        //     console.log(a);
-                        // }
-                    }
+                    bookmarkNewsSource(this, x, data); 
                 }
             })(x);
         }
@@ -149,7 +116,6 @@ function appendSources(xhr) {
             (function (j) {
                 newsContent[j].onclick = function() {                   
                     getRequest(data, j);
-                    console.log(data);
                     wrapper2.innerHTML +=
                         "<figure class='article__top-image'>" +
                             "<img src='img/"+j+ ".png' alt='' class='inner-img'>" +
@@ -246,14 +212,12 @@ function changeView() {
 viewBtn.addEventListener('click', changeView);
 
 // bookmark news sources
-
-function bookmarkNewsSource(that, x, data, exist, n) {
+function bookmarkNewsSource(that, x, data) {
     myBookmark = {
-        count: x,
+        imgNum: x,
         id: data.sources[x].id,
         name: data.sources[x].name
     };
-
     // check if fullTask already exists
     if (localStorage.getItem("bookmarks") === null) {
         //if not init array		
@@ -263,10 +227,19 @@ function bookmarkNewsSource(that, x, data, exist, n) {
         //set localstorage and convert object to a string
         localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
     } else {
-        var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
-        bookmarks.push(myBookmark);
-        localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-        }      
+        var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));   
+
+        var isPresent = bookmarks.some((bookmark) => {
+            if (data.sources[x].name == bookmark.name) {
+                return true; //Exit loop and stop going through further elements.
+            }
+        });
+    
+        if (!isPresent) {
+                 bookmarks.push(myBookmark);
+                 localStorage.setItem("bookmarks", JSON.stringify(bookmarks));  
+        }
+    }
 }
 
 //fetch bookmarks from localstorage
@@ -283,7 +256,7 @@ function fetchBookmarks (xhr) {
                     "</button>" +
                     "<div class='news__content'>" +
                         "<div class='news__img'>" +
-                            "<img src='img/"+ bookmarks[i].count + ".png' alt='' class='inner-img'>" + 
+                            "<img src='img/"+ bookmarks[i].imgNum + ".png' alt='' class='inner-img'>" + 
                         "</div>" +
                         "<div class='news__inner'>" +
                             "<span>" + bookmarks[i].name + "</span>" +
