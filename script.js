@@ -202,7 +202,12 @@ function changeView() {
             newsInner[j].classList.toggle("newsInner--view-change");
             newsImg[j].classList.toggle("newsImg--view-change");
             newsContent[j].classList.toggle("newsContent--view-change");
-            bookmarkBtn[j].classList.toggle("bookmark-button--position");
+
+            if (wrapper3.style.display == 'flex') {
+                removeBookmarkBtn[j].classList.toggle("bookmark-button--position");
+            } else {
+                bookmarkBtn[j].classList.toggle("bookmark-button--position");
+            }
         })(j);       
     }
     viewIcon1.classList.toggle('hide-view-btn1');
@@ -353,7 +358,7 @@ var searchBtn = document.querySelector("#search-btn"),
     searchInput = document.querySelector(".header__search-input"),
     headerTitle = document.querySelector("h1");
 
-function displayInput(e) {
+function displayInput() {
     searchInput.classList.toggle("showInput");
     headerTitle.classList.toggle('hideHeaderTitle');
 
@@ -363,12 +368,12 @@ function displayInput(e) {
 
 // close input when it loses focus
 
+searchBtn.addEventListener("click", displayInput);
+
 searchInput.addEventListener('blur', () => {
     searchInput.classList.remove("showInput");
     headerTitle.classList.remove('hideHeaderTitle');
 })
-
-searchBtn.addEventListener("click", displayInput);
 
 //search through news sources
 
