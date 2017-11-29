@@ -82,8 +82,9 @@ function appendSources(xhr) {
         wrapper.style.display = "flex";
         wrapper2.style.display = "none";
         wrapper3.style.display = "none";
+        console.log(data.sources);
+        for (var i = 0; i < data.sources.length; i++) {
 
-        for (var i = 0; i < data.sources.length - 1; i++) {
             wrapper.innerHTML +=        
             "<div class='news__container'>" + 
                 "<button class='news__bookmark-button'>" +
@@ -112,7 +113,7 @@ function appendSources(xhr) {
 
         //attach event lisetner to news container
 
-        for (var j = 0; j < newsContainer.length - 1; j++) {
+        for (var j = 0; j < newsContainer.length; j++) {
             (function (j) {
                 newsContent[j].onclick = function() {                   
                     getRequest(data, j);
@@ -254,7 +255,7 @@ function fetchBookmarks (xhr) {
     if (bookmarks !== null) {
         for (var i = 0; i < bookmarks.length; i++) {
             wrapper3.innerHTML += 
-        
+
                 "<div class='news__container'>" + 
                     "<button class='news__bookmarkRemove-button'>" +
                         "<i class='fa fa-recycle' aria-hidden='true'></i>" +
@@ -282,6 +283,10 @@ function fetchBookmarks (xhr) {
                     newsContent[j].onclick = function() {
                         footerBookmarkBtn.classList.remove('hideFooterBtn');
                         getBookmarkedArticles(bookmarks, j);
+                        wrapper2.innerHTML +=
+                        "<figure class='article__top-image'>" +
+                        "<img src='img/"+bookmarks[j].imgNum + ".png' alt='' class='inner-img'>" +
+                    "</figure>"
                         wrapper3.style.display = 'none';
                         wrapper3.innerHTML = '';         
                     }
