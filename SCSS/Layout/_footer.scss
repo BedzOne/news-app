@@ -35,7 +35,6 @@ footer {
 
         button, a, .footer__cred-div {
             width: 100%;
-            border-right: none;
         }
     }
 
@@ -44,14 +43,13 @@ footer {
         @include justify-content(flex-start);
         left: 0;
         height: 100%;
-        width: 1.5em;
-        border-right: 0.01em solid $lightGrey;
+        width: 1.2em;
+        border-right: none;
         background: #403D39;
 
         button, a, .footer__cred-div {
             width: 100%;
-            border-left: none;
-            border-right: none;
+            border: none;
             height: 2em;
         }
 

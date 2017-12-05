@@ -19,6 +19,11 @@ button {
     right: 0em;
     font-size: 1.5em;
     color: brown;
+
+    @media #{$desktop} {
+        top: 4.1em;
+        font-size: 1.2em;
+    }
 }
 
 .news__bookmark-button {

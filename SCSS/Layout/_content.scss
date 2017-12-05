@@ -1,12 +1,15 @@
 main {
     margin: 2em 0;
     padding: 1em 0em 1em 0em;
-    // background: #FAF3DD;
     position: relative;
 
     @media #{$desktop} {
         margin-top: 3em;
     }
+}
+
+i {
+    cursor: pointer;
 }
 
 // container with news sources
@@ -23,6 +26,12 @@ main {
         cursor: pointer;
         @include box-shadow(2px, 2px, 1.5px, 1px, lighten($grey, 20%));
         transition: all 0.05s;
+        
+
+        &:hover {
+            animation: bounce 2.5s infinite forwards;
+            @include box-shadow(2px, 2px, 1.5px, 1px, lighten($grey, 20%));
+        }
 
         &:nth-child(3n+0) {
             margin-right: 0em;
@@ -47,6 +56,9 @@ main {
             margin-right: 2em;
             border-radius: 5px;
             background: white;
+            @include box-shadow(1px, 1px, 2px, 0.5px, lighten($grey, 30%));
+            transition: 0.1s;
+            box-shadow: none;
 
             &:nth-child(3n+0) {
                 margin-right: 0;
@@ -76,6 +88,10 @@ main {
         height: 6em;
         margin-bottom: 1em;
 
+        @media #{$desktop} {
+            height: 5em;
+        }
+
     }
 
     .news__inner {
@@ -86,10 +102,7 @@ main {
         span {
             padding: 0.5em 0;
         }
-
     }
-
-    
 }
 
 //container with articles
@@ -118,6 +131,13 @@ main {
             width: 50%;
             height: 6em;
         }
+
+        @media #{$desktop} {
+            position: absolute;
+            top: -2em;
+            width: 20%;
+            height: 4em;
+        }
     }
 
     .article__container {
@@ -135,13 +155,17 @@ main {
             height: auto;
             max-height: 4.7em;
             min-height: 4em;
+
+            @media #{$desktop} {
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                max-height: 100%;
+                min-height: 100%;
+            }
         }
 
-        .article__inner {
-            padding: 0.5em .2em;
-            padding-left: 0.3em;
-            width: 70%;
-        }
+
 
         h4 {
             font-size: 57%;
@@ -163,11 +187,16 @@ main {
         .icons {
             position: absolute;
             bottom: 0.2em;
+
+            @media #{$desktop} {
+                bottom: 85%;
+            }
         }
 
         .fa-twitter, .fa-facebook {
             margin-top: 1em;
             padding-bottom: 0.05em;
+
         }
 
         .fa-facebook {
@@ -178,6 +207,16 @@ main {
             width: calc(100% - 2em);
             margin-right: 2em;
         }
+
+        @media #{$desktop} {
+            width: calc((100% / 3) - 0.5em) ;
+            margin-right: 0.5em;
+            height: 10em;
+            box-shadow: none;
+            background: white;
+        }
+
+
     }
     
     .article__container:nth-child(2) {
@@ -186,11 +225,15 @@ main {
         margin-top: 1em;
         margin-bottom: 1em;
 
-
         .article__inner {
             padding: 0 0.5em;
             width: 100%;
             height: auto;
+
+            @media #{$desktop} {
+                width: 65%;
+                padding-top: 1em;
+            }
         }
 
         p {
@@ -204,6 +247,13 @@ main {
             height: 50%;
             max-height: 10em;
             margin-bottom: 1em;
+
+            @media #{$desktop} {
+                position: static;
+                width: 35%;
+                height: 100%;
+                max-height: 100%;
+            }
         }
 
         h4 {          
@@ -213,6 +263,10 @@ main {
 
         .icons {
             position: static;
+            @media #{$desktop} {
+                position: absolute;
+                bottom: 0.5em;
+            }
         }
 
         .fa-heart-o {
@@ -223,10 +277,73 @@ main {
         .fa-twitter, .fa-facebook {
             padding-bottom: 0.2em;
         }
+
+        @media #{$desktop} {
+            @include flex-direction(row);
+            width: 70%;
+            height: 7em;
+        }
+
     }  
 
     a {
         text-decoration: none;
         color: $black;
+    }
+
+    @media #{$desktop} {
+        @include flex-direction(row);
+        @include flex-wrap(wrap);
+        padding-left: 2em;
+        margin-top: 2em;
+
+        .article__container:not(:nth-child(2)) {
+
+            .article__inner {
+                padding: 0.5em .2em;
+                padding-left: 0.3em;
+                width: 70%;
+    
+                > a {
+                    @media #{$desktop} {
+                        position: absolute;
+                        bottom: 0em;
+                        color: white;
+                        font-size: 0.9em;
+                        font-weight: 100;
+                        width: 100%;
+                        left: 0;
+                        padding-bottom: 0.2em;
+                        padding-left: 0.5em;
+                        background: grey;
+                        opacity: 0.5;
+                    }
+                }
+
+                i {
+                    color: lighten($grey, 30%);
+                }
+            }
+        }
+    }
+}
+
+//animation
+
+@keyframes bounce {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    5% {
+        transform: rotate(3deg); 
+    }
+
+    10% {
+        transform: rotate(-3deg); 
+    }
+
+    25%, 26%, 50%, 70%, 100% {
+        transform: rotate(0deg); 
     }
 }

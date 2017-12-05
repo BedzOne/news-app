@@ -12,12 +12,12 @@ header {
 
     @media #{$desktop} {
         position: absolute;
-        width: 60%;
+        width:15em;
         height: 1.8em;
-        left: 20%;
+        left: 30%;
         top: 1em;
         border-radius: 5px;
-        border: 0.05em solid $grey;
+        border: none;
         background: white;
 
     }
@@ -30,6 +30,10 @@ h1{
     width: 85%;
     height: 100%;
     line-height: 2em;
+
+    @media #{$desktop} {
+        height: auto;
+    }
 }
 
 .header__search-input {
@@ -51,9 +55,9 @@ h1{
 
     @media #{$desktop} {
         width: 60%;
-        left: 15em;
+        left: 25%;
         height: 3em;
         border-radius: 0;
-        border: 0.05em solid black;
+        border: 0.05em solid lighten($darkGrey, 10%);
     }
 }
