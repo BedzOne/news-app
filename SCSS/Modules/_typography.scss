@@ -2,11 +2,9 @@
 
 body,html {
     font-size: calc(1em + 1vw);
-    // font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-family: 'Roboto', sans-serif;
 }
-
-
 
 header {
 
@@ -19,8 +17,12 @@ header {
         color: white;
         letter-spacing: 0.08em;
         font-weight: normal;
-    }
 
+        @media #{$desktop} {
+            font-size: 0.7em;
+            color: $darkGrey;
+        }
+    }
     .header__view-control--item {
         font-size: 0.7em;
     }
@@ -38,5 +40,14 @@ footer {
 
     a {
         color: $black;
+    }
+}
+
+#search-btn {
+    @media #{$desktop} {
+        i {
+            color: $darkGrey;
+        }
+        
     }
 }

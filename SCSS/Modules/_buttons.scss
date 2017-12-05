@@ -9,6 +9,8 @@ button {
 #search-btn {
     width: 15%;
     height: 100%;
+
+
 }
 
 .news__bookmark-button, .news__bookmarkRemove-button {
@@ -28,13 +30,21 @@ button {
 // .news__container
 
 footer {
-
     button {
         border-right: 0.05em solid $grey;
+        cursor: pointer;
+
+        @media #{$landscape}, #{$desktop} {
+            border-right: none;
+        }
     }
 
-    .footer__view-button {
+    #footer__view-button {
         position: relative;
+
+        @media #{$desktop} {
+            display: none;
+        }
     }
     
     .view-btn2, .view-btn1{

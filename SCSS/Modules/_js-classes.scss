@@ -2,6 +2,10 @@
     display: block;
     width: 85%;
     border-bottom: 0.01em solid rgb(36, 31, 17);
+
+    @media #{$tablet} {
+        width: 60%;
+    }
 }
 
 #wrapper, #wrapper-3 {
@@ -13,11 +17,27 @@
         max-width: 100%;
         margin-right: 0;
         height: 5em;
-    
+
+        @media #{$tablet} {
+            height: 7em;
+        }
+
+        @media #{$landscape}, #{$desktop} {
+            width: calc(50% - 5em);
+            height: 4em;
+            max-width: calc(50% - 5em);
+            margin-right:0.5em;
+            margin-left: 0;
+            font-size: 0.5em;
+
+            &:nth-child(2n+0) {
+                margin-right: 2.5em;
+            } 
+        }
     }
 
     .newsImgWrapper--view-change {
-        height: 5em;
+        height: 100%;
         width: 30%;
     }
 
@@ -72,6 +92,10 @@ footer {
 
     .extend-cred-div {
         width: calc((100% / 6) * 4);
+
+        @media #{$tablet} {
+            width: 100%;
+        }
     }
 
 }

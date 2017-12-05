@@ -8,3 +8,8 @@ $lightGrey: #a3a3a3;
 $heartRed: #d60a0a;
 $blue: #6c87d1;
 $brown: #531c1c;
+
+$tablet: 'screen and (min-width: 500px)';
+$landscape: 'screen and (max-height: 400px) and (max-width: 640px) and (orientation: landscape)';
+$desktop: 'screen and (min-width:800px)';
+$desktopLarge: 'screen and (min-width: 900px)';

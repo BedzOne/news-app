@@ -3,6 +3,10 @@ main {
     padding: 1em 0em 1em 0em;
     // background: #FAF3DD;
     position: relative;
+
+    @media #{$desktop} {
+        margin-top: 3em;
+    }
 }
 
 // container with news sources
@@ -23,6 +27,37 @@ main {
         &:nth-child(3n+0) {
             margin-right: 0em;
         } 
+
+        @media #{$tablet} {
+            width: calc(25% - 1em);
+
+            &:nth-child(3n+0) {
+                margin-right: 0.4em;
+            } 
+        }
+
+        @media #{$landscape} {
+            width: calc(25% - 1.6em);
+            &:nth-child(4n+0) {
+                margin-right: 2em;
+            } 
+        }   
+
+        @media #{$desktop} {
+            margin-right: 2em;
+            border-radius: 5px;
+            background: white;
+
+            &:nth-child(3n+0) {
+                margin-right: 0;
+            } 
+        }
+
+        @media #{$desktopLarge} {
+            width: 7em;
+            margin-right: 0;
+            margin-left: 1em;
+        }
     }    
 
     .news__content {
@@ -31,6 +66,10 @@ main {
 
     .news__content, .news__img, img {
         width: 100%;
+
+        @media #{$desktop} {
+            border-radius: 5px;
+        }
     }
 
     img {
@@ -73,6 +112,11 @@ main {
         img {
             width: 100%;
             height: 100%;
+        }
+
+        @media #{$tablet} {
+            width: 50%;
+            height: 6em;
         }
     }
 
@@ -130,7 +174,10 @@ main {
             margin-left: 0.3em;
         }
 
-
+        @media #{$landscape} {
+            width: calc(100% - 2em);
+            margin-right: 2em;
+        }
     }
     
     .article__container:nth-child(2) {
