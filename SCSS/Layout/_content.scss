@@ -26,12 +26,6 @@ i {
         cursor: pointer;
         @include box-shadow(2px, 2px, 1.5px, 1px, lighten($grey, 20%));
         transition: all 0.05s;
-        
-
-        &:hover {
-            animation: bounce 2.5s infinite forwards;
-            @include box-shadow(2px, 2px, 1.5px, 1px, lighten($grey, 20%));
-        }
 
         &:nth-child(3n+0) {
             margin-right: 0em;
@@ -46,6 +40,7 @@ i {
         }
 
         @media #{$landscape} {
+            height: 10em;
             width: calc(25% - 1.6em);
             &:nth-child(4n+0) {
                 margin-right: 2em;
@@ -56,13 +51,19 @@ i {
             margin-right: 2em;
             border-radius: 5px;
             background: white;
-            @include box-shadow(1px, 1px, 2px, 0.5px, lighten($grey, 30%));
+            @include box-shadow(1px, 1px, 2px, 0.5px, lighten($blue, 1%));
             transition: 0.1s;
             box-shadow: none;
+            border: 0.01em solid $blue;
 
             &:nth-child(3n+0) {
                 margin-right: 0;
             } 
+
+            &:hover {
+                    animation: bounce 2.5s infinite forwards;
+                    @include box-shadow(2px, 2px, 1.5px, 1px, darken($blue, 7%));               
+            }
         }
 
         @media #{$desktopLarge} {
@@ -101,6 +102,10 @@ i {
 
         span {
             padding: 0.5em 0;
+        }
+
+        @media #{$desktop} {
+            width: 100%;
         }
     }
 }
@@ -211,12 +216,11 @@ i {
         @media #{$desktop} {
             width: calc((100% / 3) - 0.5em) ;
             margin-right: 0.5em;
-            height: 10em;
-            box-shadow: none;
+            height: 9em;
+            @include box-shadow(2px, 2px, 1.5px, 1px, darken($blue, 10%));
             background: white;
+            overflow: hidden;
         }
-
-
     }
     
     .article__container:nth-child(2) {
@@ -308,15 +312,15 @@ i {
                     @media #{$desktop} {
                         position: absolute;
                         bottom: 0em;
-                        color: white;
+                        color: black;
                         font-size: 0.9em;
                         font-weight: 100;
                         width: 100%;
+                        height: 3em;
                         left: 0;
-                        padding-bottom: 0.2em;
                         padding-left: 0.5em;
-                        background: grey;
-                        opacity: 0.5;
+                        background: $lightGreyOpaque;
+                        transition: 0.7s;
                     }
                 }
 
