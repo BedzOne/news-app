@@ -77,19 +77,36 @@ footer {
 
 #wrapper-2 {
 
+    .article__container {
+        h4 {
+            font-size: 60%;
+        }
+
+        p {
+            font-size: 60%;
+        }
+    }
+
     @media #{$desktop} {
-        .article__container:nth-child(2) {
+        .article__container {
             
             h4 {
-                font-size: 60%
+                font-size: 40%
             }
     
             p {
-                font-size: 40%;
+                font-size: 30%;
             }
         }
+
         i {
             font-size: 0.7em;
+        }
+
+        .article__container {
+            h4 {
+                font-size: 40%
+            }
         }
     }
 

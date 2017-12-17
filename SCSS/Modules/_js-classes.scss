@@ -68,6 +68,10 @@
     padding-bottom: 0.2em; 
 }
 
+.js-article-scale {
+    transform: scale(1) !important;
+}
+
 .hideHeaderTitle {
     opacity: 0;
 }

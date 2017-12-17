@@ -50,7 +50,6 @@ h1{
     @include placeholder {
         color: $grey;
         font-weight:200;
-        padding-left: 0.5em;
     }
 
     @media #{$desktop} {

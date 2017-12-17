@@ -6,7 +6,8 @@ var wrapper = document.querySelector("#wrapper"),
     backBtn = document.querySelector(".footer__back-button"),
     credDiv = document.querySelector('.footer__cred-div'),
     bookmarkBtn = document.getElementsByClassName('news__bookmark-button'),
-    twittBtn = document.getElementsByClassName('twitt-btn');
+    twittBtn = document.getElementsByClassName('twitt-btn'),
+    articleContainer = document.getElementsByClassName('article__container');
 
 // EVENT LISTENERS to load news sources
 
@@ -180,6 +181,20 @@ function showArticle(newRequest) {
                         twittArticle(data, a);
                     }
                 })(a);
+            }
+
+            for (var j = 0; j < articleContainer.length; j++) {
+                (function (j) {
+                    setTimeout(function(){
+                        articleContainer[j].classList.add('js-article-scale');
+                    }, 500);
+        
+                    // if (wrapper3.style.display == 'flex') {
+                    //     removeBookmarkBtn[j].classList.toggle("bookmark-button--position");
+                    // } else {
+                    //     bookmarkBtn[j].classList.toggle("bookmark-button--position");
+                    
+                })(j);      
             }
             // change styles of footer buttons
 
