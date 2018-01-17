@@ -11,6 +11,7 @@ $brown: #531c1c;
 $lightGreyOpaque: rgba(224, 219, 219, 0.432);
 
 $tablet: 'screen and (min-width: 500px)';
-$landscape: 'screen and (max-height: 400px) and (max-width: 640px) and (orientation: landscape)';
+$landscape: 'screen and (min-height: 400px) and (max-width: 640px) and (orientation: landscape)';
+$landscapeSmall: 'screen and (max-height: 400px) and (max-width: 640px) and (orientation: landscape)';
 $desktop: 'screen and (min-width:800px)';
 $desktopLarge: 'screen and (min-width: 900px)';
